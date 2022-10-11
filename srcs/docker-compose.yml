@@ -53,13 +53,13 @@ volumes:
   driver_opts:
    type: 'none'
    o: 'bind'
-   device: '/mnt/nfs/homes/lcalvie/Documents/WordPress'
+   device: '/home/lcalvie/WordPress'
  DB:
   driver: local
   driver_opts:
    type: 'none'
    o: 'bind'
-   device: '/mnt/nfs/homes/lcalvie/Documents/DB'
+   device: '/home/lcalvie/DB'
 
 networks:
     inception:

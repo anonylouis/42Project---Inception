@@ -1,7 +1,7 @@
 FROM debian:buster
 
 RUN apt-get update -y && apt-get upgrade -y \
-    && apt-get install -y wget php7.3 php-fpm php-mysql
+    && apt-get install -y wget php7.3 php-fpm php-mysql mariadb-client
 
 # Download wordpress 6.0.2 (10/10/2022)
 RUN wget https://fr.wordpress.org/wordpress-6.0.2-fr_FR.tar.gz -P /var/www
@@ -12,6 +12,7 @@ RUN chown -Rv root:root /var/www/wordpress
 
 # configure php
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+RUN mkdir -p /run/php/
 
 # configure wordpress
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
