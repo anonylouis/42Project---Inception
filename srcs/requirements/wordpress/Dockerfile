@@ -19,6 +19,8 @@ RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 RUN sleep 10
 RUN wp --info
-RUN wp config create --allow-root --path='/var/www/wordpress' --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost=mariadb:3306
 
-ENTRYPOINT ["php-fpm7.3", "-F"]
+# entrypoint
+COPY ./conf/config_wordpress.sh /
+RUN chmod +x /config_wordpress.sh
+ENTRYPOINT ["bash", "/config_wordpress.sh"]
