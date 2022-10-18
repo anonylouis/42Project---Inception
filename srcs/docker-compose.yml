@@ -12,8 +12,6 @@ services:
   volumes:
    - DB:/var/lib/mysql
   restart: unless-stopped
-  expose :
-   - "3306"
 
  nginx:
   container_name: nginx
@@ -44,8 +42,6 @@ services:
   volumes:
    - WordPress:/var/www/wordpress
   restart: on-failure
-  expose :
-   - "9000"
 
 volumes:
  WordPress:

@@ -21,9 +21,12 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 RUN wp --info
 
 #index page wordpress
-COPY ./conf/index.html /var/www/wordpress/index.html
+COPY ./conf/index.php /var/www/wordpress/test.php
 
 # entrypoint
 COPY ./conf/config_wordpress.sh /
 RUN chmod +x /config_wordpress.sh
+
+EXPOSE 9000
+
 ENTRYPOINT ["bash", "/config_wordpress.sh"]

@@ -7,6 +7,8 @@
   <script src="script.js"></script>
 </head>
 <body>
-  page de test de fou
+  <?php
+	  echo 'genre php marche ???'
+  ?>
 </body>
 </html>
