@@ -1,32 +1,29 @@
 FROM debian:buster
 
-RUN apt-get update -y && apt-get upgrade -y \
-    && apt-get install -y wget php7.3 php-fpm php-mysql mariadb-client
+#Install necessary package from php
 
-# Download wordpress 6.0.2 (10/10/2022)
-RUN wget https://fr.wordpress.org/wordpress-6.0.2-fr_FR.tar.gz -P /var/www
+RUN apt-get update && apt-get -y install \
+wget \
+php \
+php-cgi \
+php-mysql \
+php-fpm \
+php-pdo \
+php-gd php-cli \
+php-mbstring
 
-# extract wordpress
-RUN tar -xf /var/www/wordpress-6.0.2-fr_FR.tar.gz -C /var/www/ && rm -rf wordpress-6.0.2-fr_FR.tar.gz
-RUN chown -Rv root:root /var/www/wordpress
+#Copy the necessary tools to download wordpress
 
-# configure php
-COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
-RUN mkdir -p /run/php/
+COPY ./conf/www.conf /var/www/html/www.conf
 
-# configure wordpress
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /usr/local/bin/wp
-RUN wp --info
+#Create the folder to enable php start
 
-#index page wordpress
-COPY ./conf/index.php /var/www/wordpress/test.php
+RUN mkdir /run/php
 
-# entrypoint
-COPY ./conf/config_wordpress.sh /
-RUN chmod +x /config_wordpress.sh
+#Launch script
+
+COPY ./conf/config_wordpress.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/config_wordpress.sh
 
 EXPOSE 9000
-
-ENTRYPOINT ["bash", "/config_wordpress.sh"]
+ENTRYPOINT ["config_wordpress.sh"]

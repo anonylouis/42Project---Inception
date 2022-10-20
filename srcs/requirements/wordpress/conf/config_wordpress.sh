@@ -1,18 +1,28 @@
 #!/bin/bash
 
-export PATH=$PATH:/usr/local/mysql/bin
-
-if [ ! -e /var/www/wordpress/wp-config.php ]
+if [ -f /is_install ]
 then
-	echo installing wordpress
-	#sleep 60
-	#wp config create --allow-root --path='/var/www/wordpress' --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost=mariadb:3306
-	#wp core install --allow-root --url=lcalvie.42.fr --title=Inception --admin_user=$WP_ADMIN_LOGIN --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --skip-email --path='/var/www/wordpress'
-	#wp user create --allow-root $WP_USER1_LOGIN $WP_USER1_EMAIL --user_pass=$WP_USER1_PASSWORD --path='/var/www/wordpress'
+	echo "wordpress already downloaded"
 else
-	echo wordpress already installed
+	#Download wordpress
+	wget https://wordpress.org/latest.tar.gz -P /var/www/html/
+	tar -xzvf /var/www/html/latest.tar.gz -C /var/www/html/
+	rm -rf /var/www/html/latest.tar.gz
+
+	sleep 30
+
+	#Update configuration file
+	rm -rf /etc/php/7.3/fpm/pool.d/www.conf
+	mv /var/www/html/www.conf /etc/php/7.3/fpm/pool.d/
+
+	#Inport env variables in the config file
+	sed -i "s/username_here/$SQL_USER/g" /var/www/html/wordpress/wp-config-sample.php
+	sed -i "s/password_here/$SQL_PASSWORD/g" /var/www/html/wordpress/wp-config-sample.php
+	sed -i "s/localhost/$SQL_HOSTNAME/g" /var/www/html/wordpress/wp-config-sample.php
+	sed -i "s/database_name_here/$SQL_DATABASE/g" /var/www/html/wordpress/wp-config-sample.php
+	mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+	touch /is_install
 fi
 
-echo launching wordpress
-
-php-fpm7.3 -F
+echo "wordpress ready"
+/usr/sbin/php-fpm7.3 -F

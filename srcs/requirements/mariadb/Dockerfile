@@ -1,13 +1,20 @@
 FROM debian:buster
 
-RUN apt update -y && apt upgrade -y \
-    && apt-get install mariadb-server -y
+RUN apt-get update -y && apt-get upgrade -y \
+    && apt-get install mariadb-server mariadb-client -y
 
-# mariadb configuration file
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+
+COPY conf/my.cnf /root/.my.cnf
+
+RUN mkdir /usr/share/mariadb
+WORKDIR /usr/share/mariadb
+
+RUN ["/usr/bin/install" , "-m", "755", "-o", "mysql", "-g", "root", "-d", "/var/run/mysqld"]
 
 # entrypoint
+#COPY ./conf/test.txt /test.txt
 COPY ./conf/config_mariadb.sh /config_mariadb.sh
+#COPY ./conf/wordpress.sql /usr/local/bin/
 RUN chmod +x /config_mariadb.sh
 
 EXPOSE 3306
