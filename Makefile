@@ -6,7 +6,7 @@ all :
 	@echo $(RED)Running ./srcs/docker-compose.yml$(WHITE)
 	mkdir -p /home/lcalvie/data/DB
 	mkdir -p /home/lcalvie/data/WordPress
-	sudo docker-compose -f ./srcs/docker-compose.yml up --build -d
+	sudo docker-compose -f ./srcs/docker-compose.yml up --build 
 
 stop:
 	sudo docker-compose -f ./srcs/docker-compose.yml stop

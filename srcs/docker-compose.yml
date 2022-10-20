@@ -46,6 +46,22 @@ services:
    - WordPress:/var/www/html
   restart: on-failure
 
+ adminer:
+  container_name: adminer
+  init: true
+  networks:
+   - inception
+  depends_on:
+   - mariadb
+  build:
+   context: bonus/adminer
+   dockerfile: Dockerfile
+  env_file: .env
+  volumes:
+   - WordPress:/var/www/html
+  restart: on-failure
+
+
 volumes:
  WordPress:
   driver: local
