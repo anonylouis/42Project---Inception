@@ -52,13 +52,13 @@ volumes:
   driver_opts:
    type: 'none'
    o: 'bind'
-   device: '/home/lcalvie/WordPress'
+   device: '/home/lcalvie/data/WordPress'
  DB:
   driver: local
   driver_opts:
    type: 'none'
    o: 'bind'
-   device: '/home/lcalvie/DB'
+   device: '/home/lcalvie/data/DB'
 
 networks:
     inception:
