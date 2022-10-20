@@ -4,7 +4,13 @@ WHITE="\033[0m"
 
 all :
 	@echo $(RED)Running ./srcs/docker-compose.yml$(WHITE)
-	sudo docker-compose -f ./srcs/docker-compose.yml up --build
+	sudo docker-compose -f ./srcs/docker-compose.yml up --build -d
+
+stop:
+	sudo docker-compose -f ./srcs/docker-compose.yml stop
+
+check:
+	sudo docker-compose -f ./srcs/docker-compose.yml ps
 
 clean :
 	@echo $(RED)docker stop$(WHITE)
@@ -30,7 +36,6 @@ fclean : clean
 	sudo rm -rf /home/lcalvie/DB /home/lcalvie/WordPress
 	mkdir -p /home/lcalvie/DB
 	mkdir -p /home/lcalvie/WordPress
-
 
 re : fclean all
 

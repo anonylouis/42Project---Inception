@@ -1,29 +1,20 @@
 FROM debian:buster
 
-#Install necessary package from php
-
 RUN apt-get update && apt-get -y install \
 wget \
-php \
-php-cgi \
-php-mysql \
-php-fpm \
-php-pdo \
-php-gd php-cli \
-php-mbstring
+php php-cgi php-mysql php-fpm php-pdo php-gd php-cli php-mbstring
 
-#Copy the necessary tools to download wordpress
+#php-fpm7.3 configuration file (listen = 0.0.0.0:9000)
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
 
-COPY ./conf/www.conf /var/www/html/www.conf
+#avoid errors when running php
+RUN mkdir -p /run/php
 
-#Create the folder to enable php start
-
-RUN mkdir /run/php
-
-#Launch script
-
-COPY ./conf/config_wordpress.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/config_wordpress.sh
+#entrypoint
+COPY ./conf/config_wordpress.sh /config_wordpress.sh
+RUN chmod +x /config_wordpress.sh
 
 EXPOSE 9000
-ENTRYPOINT ["config_wordpress.sh"]
+
+ENTRYPOINT ["bash", "/config_wordpress.sh"]
+
