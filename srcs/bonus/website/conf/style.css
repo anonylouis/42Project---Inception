@@ -39,6 +39,14 @@ h3 {
 	color: white;
 }
 
+h4 {
+    text-align: center;
+    font-size: 16px;
+	font-weight: normal;
+	font-family: 'Hammersmith One', sans-serif;
+	color: white;
+}
+
 .friends a {
     display: block;
     position: absolute;
