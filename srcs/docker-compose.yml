@@ -38,6 +38,7 @@ services:
    - inception
   depends_on:
    - mariadb
+   - redis
   build:
    context: requirements/wordpress
    dockerfile: Dockerfile
@@ -53,6 +54,7 @@ services:
    - inception
   depends_on:
    - mariadb
+   - wordpress
   build:
    context: bonus/adminer
    dockerfile: Dockerfile
@@ -61,6 +63,27 @@ services:
    - WordPress:/var/www/html
   restart: on-failure
 
+ website:
+  container_name: website
+  init: true
+  networks:
+   - inception
+  build:
+   context: bonus/website
+   dockerfile: Dockerfile
+  restart: on-failure
+  ports :
+   - "80:80"
+
+ redis:
+  container_name: redis
+  init: true
+  networks:
+   - inception
+  build:
+   context: bonus/redis
+   dockerfile: Dockerfile
+  restart: on-failure
 
 volumes:
  WordPress:

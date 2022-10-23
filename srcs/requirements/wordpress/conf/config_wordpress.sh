@@ -4,6 +4,7 @@
 if [ -f /is_install ]
 then
 	echo "wordpress already downloaded"
+	sleep 10
 else
 	#Download wordpress
 	wget https://wordpress.org/latest.tar.gz -P /var/www/html/ -nv
@@ -25,6 +26,7 @@ else
 	sed -i "s/password_here/$SQL_PASSWORD/g" /var/www/html/wordpress/wp-config-sample.php
 	sed -i "s/localhost/$SQL_HOSTNAME/g" /var/www/html/wordpress/wp-config-sample.php
 	sed -i "s/database_name_here/$SQL_DATABASE/g" /var/www/html/wordpress/wp-config-sample.php
+	sed -i "/define( 'NONCE_SALT',       'put your unique phrase here' );/a define('WP_CACHE_KEY_SALT', 'lcalvie.42.fr');\ndefine('WP_CACHE', true);\ndefine('WP_REDIS_HOST', 'redis');" /var/www/html/wordpress/wp-config-sample.php
 	mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 	
 	# -filling wordpress first page
@@ -33,9 +35,17 @@ else
 	# -adding user1
 	wp user create --allow-root $WP_USER1_LOGIN $WP_USER1_EMAIL --user_pass=$WP_USER1_PASSWORD --path='/var/www/html/wordpress'
 	
+	#redis
+	wp plugin install redis-cache --allow-root --activate --activate-network --path='/var/www/html/wordpress'
+	wp redis enable --allow-root --path='/var/www/html/wordpress'
+	
 	#to configure it only one time
 	touch /is_install
 fi
+
+echo -n "redis : "
+wp redis status --allow-root --path=/var/www/html/wordpress | head -1
+sleep 2
 
 echo "wordpress ready"
 /usr/sbin/php-fpm7.3 -F
