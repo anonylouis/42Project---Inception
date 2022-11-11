@@ -85,6 +85,25 @@ services:
    dockerfile: Dockerfile
   restart: on-failure
 
+ ftp:
+  container_name: ftp
+  init: true
+  networks:
+   - inception
+  depends_on:
+   - wordpress
+  build:
+   context: bonus/FTP
+   dockerfile: Dockerfile
+  env_file: .env
+  restart: on-failure
+  volumes:
+   - WordPress:/var/www/html
+  ports :
+   - "20:20"
+   - "21:21"
+   - "4000-5000:4000-5000"
+
 volumes:
  WordPress:
   driver: local
