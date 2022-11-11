@@ -6,6 +6,7 @@ all :
 	@echo $(RED)Running ./srcs/docker-compose.yml$(WHITE)
 	mkdir -p /home/lcalvie/data/DB
 	mkdir -p /home/lcalvie/data/WordPress
+	mkdir -p /home/lcalvie/data/Python
 	sudo docker-compose -f ./srcs/docker-compose.yml up --build 
 
 stop:
@@ -35,7 +36,7 @@ clean :
 		; fi
 
 fclean : clean
-	sudo rm -rf /home/lcalvie/data/DB /home/lcalvie/data/WordPress
+	sudo rm -rf /home/lcalvie/data/DB /home/lcalvie/data/WordPress /home/lcalvie/data/Python
 
 re : fclean all
 

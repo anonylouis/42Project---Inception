@@ -12,7 +12,7 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/nginx.crt -keyout /etc/nginx/ss
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
 # port
-EXPOSE 443
+EXPOSE 443 9998
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 

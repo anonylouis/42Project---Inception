@@ -10,7 +10,7 @@ ADD html /var/website/
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
 # port
-EXPOSE 80
+EXPOSE 9999
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
