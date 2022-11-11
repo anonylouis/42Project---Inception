@@ -7,7 +7,7 @@ After this you can write :
 - ```get filename``` : to download the *filename*
 - ```put filename``` : to upload the *filename*
 
-**Note :** Use *cd* and *ls* to navigate and *exit* to quit.
+**Note :** Use *cd* and *ls* to browse directories and *exit* to quit.
 
 ## Adminer
 
