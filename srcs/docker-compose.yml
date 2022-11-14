@@ -105,7 +105,7 @@ services:
   ports :
    - "20:20"
    - "21:21"
-   - "4000-5000:4000-5000"
+   - "4000-4200:4000-4200"
 
  python:
   container_name: python
@@ -115,8 +115,6 @@ services:
   build:
    context: bonus/python
    dockerfile: Dockerfile
-  stdin_open: true
-  tty: true
   env_file: .env
   restart: on-failure
   volumes:

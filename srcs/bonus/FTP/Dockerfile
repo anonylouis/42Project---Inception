@@ -10,7 +10,7 @@ RUN chmod +x /config_ftp.sh
 
 COPY ./conf/vsftpd.conf /etc/
 
-EXPOSE 20 21 4000-5000
+EXPOSE 20 21 4000-4200
 
 ENTRYPOINT [ "bash", "/config_ftp.sh" ]
 
