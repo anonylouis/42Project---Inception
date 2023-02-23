@@ -30,7 +30,7 @@ else
 	mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 	
 	# -filling wordpress first page
-	wp core install --allow-root --url=lcalvie.42.fr --title=Lcalvie_inception --admin_user=$WP_ADMIN_LOGIN --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --skip-email --path='/var/www/html/wordpress'
+	wp core install --allow-root --url=localhost:4443 --title=Lcalvie_inception --admin_user=$WP_ADMIN_LOGIN --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --skip-email --path='/var/www/html/wordpress'
 	
 	# -adding user1
 	wp user create --allow-root $WP_USER1_LOGIN $WP_USER1_EMAIL --user_pass=$WP_USER1_PASSWORD --path='/var/www/html/wordpress'
