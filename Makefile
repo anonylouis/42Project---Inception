@@ -2,7 +2,7 @@ GREEN="\033[0;32m"
 WHITE="\033[0m"
 
 #absolute path here !!!
-#/home/lcalvie/data for the 42 evaluation
+#/home/login/data for the 42 evaluation
 DATA_DIR=${CURDIR}/data
 
 all :
@@ -10,7 +10,9 @@ all :
 	mkdir -p $(DATA_DIR)/DB
 	mkdir -p $(DATA_DIR)/WordPress
 	mkdir -p $(DATA_DIR)/Python
-	DATA_DIR=$(DATA_DIR) docker-compose -f ./srcs/docker-compose.yml up --build 
+	DATA_DIR=$(DATA_DIR) docker-compose -f ./srcs/docker-compose.yml up --build -d
+	sleep 70
+	@echo $(GREEN)Dockers are ready !$(WHITE)
 
 stop:
 	DATA_DIR=$(DATA_DIR) docker-compose -f ./srcs/docker-compose.yml stop
@@ -20,23 +22,15 @@ check:
 
 clean :
 	@echo $(GREEN)docker stop$(WHITE)
+	@docker stop nginx mariadb wordpress ftp website python adminer redis 2>/dev/null || true
 	@echo $(GREEN)docker rm$(WHITE)
-	@if [ ! -z "`docker ps -qa`" ]; then \
-		docker stop $$(docker ps -qa) && \
-		docker rm $$(docker ps -qa) \
-		; fi
+	@docker rm nginx mariadb wordpress ftp website python adminer redis 2>/dev/null || true
 	@echo $(GREEN)docker rmi$(WHITE)
-	@if [ ! -z "`docker images -qa`" ]; then \
-		docker rmi -f $$(docker images -qa) 2>/dev/null || true\
-		; fi
+	@docker rmi srcs-nginx:latest srcs-mariadb:latest srcs-wordpress:latest srcs-ftp:latest srcs-website:latest srcs-python:latest srcs-adminer:latest srcs-redis:latest 2>/dev/null || true
 	@echo $(GREEN)docker volume rm$(WHITE)
-	@if [ ! -z "`docker volume ls -q`" ]; then \
-		docker volume rm $$(docker volume ls -q) \
-		; fi
+	@docker volume rm srcs_Python srcs_WordPress srcs_DB 2>/dev/null || true
 	@echo $(GREEN)docker network rm$(WHITE)
-	@if [ ! -z "`docker network ls -q`" ]; then \
-		docker network rm $$(docker network ls -q) 2>/dev/null || true \
-		; fi
+	@docker network rm srcs_inception 2>/dev/null || true
 
 fclean : clean
 	rm -rf $(DATA_DIR)/DB $(DATA_DIR)/WordPress $(DATA_DIR)/Python
