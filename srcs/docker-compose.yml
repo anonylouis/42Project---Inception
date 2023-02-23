@@ -31,7 +31,7 @@ services:
    - Python:/var/www/python
   restart: on-failure
   ports :
-   - "443:443"
+   - "4443:443"
    - "9998:9998"
 
  wordpress:
@@ -103,8 +103,8 @@ services:
   volumes:
    - WordPress:/var/www/html
   ports :
-   - "20:20"
-   - "21:21"
+   - "2220:20"
+   - "2221:21"
    - "4000-4200:4000-4200"
 
  python:
@@ -126,19 +126,19 @@ volumes:
   driver_opts:
    type: 'none'
    o: 'bind'
-   device: '/home/lcalvie/data/WordPress'
+   device: '${DATA_DIR}/WordPress'
  DB:
   driver: local
   driver_opts:
    type: 'none'
    o: 'bind'
-   device: '/home/lcalvie/data/DB'
+   device: '${DATA_DIR}/DB'
  Python:
    driver: local
    driver_opts:
     type: 'none'
     o: 'bind'
-    device: '/home/lcalvie/data/Python'
+    device: '${DATA_DIR}/Python'
 
 networks:
     inception:
