@@ -10,15 +10,15 @@ all :
 	mkdir -p $(DATA_DIR)/DB
 	mkdir -p $(DATA_DIR)/WordPress
 	mkdir -p $(DATA_DIR)/Python
-	DATA_DIR=$(DATA_DIR) docker-compose -f ./srcs/docker-compose.yml up --build -d
+	@DATA_DIR=$(DATA_DIR) docker-compose -f ./srcs/docker-compose.yml up --build -d
 	sleep 70
 	@echo $(GREEN)Dockers are ready !$(WHITE)
 
 stop:
-	DATA_DIR=$(DATA_DIR) docker-compose -f ./srcs/docker-compose.yml stop
+	@DATA_DIR=$(DATA_DIR) docker-compose -f ./srcs/docker-compose.yml stop
 
 check:
-	DATA_DIR=$(DATA_DIR) docker-compose -f ./srcs/docker-compose.yml ps
+	@DATA_DIR=$(DATA_DIR) docker-compose -f ./srcs/docker-compose.yml ps
 
 clean :
 	@echo $(GREEN)docker stop$(WHITE)
