@@ -9,6 +9,13 @@ The `make` command will run 8 dockers simultaneously !
 - With http://localhost:9998/ you can access to a page using a pythonscript (executed with a python cgi)
 - With http://localhost:9999/ you can access to a static website
 
+
+Use :
+- `make` to run the program
+- `make stop` to stop dockers
+- `make clean` to remove all docker images, docker volumes, docker networks
+- `make check` to check the dockers status  
+
 ![check](https://github.com/anonylouis/42Project---Inception/blob/main/check.png)
 
 ## Wordpress
