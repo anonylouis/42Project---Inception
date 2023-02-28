@@ -9,6 +9,8 @@ The `make` command will run 8 dockers simultaneously !
 - With http://localhost:9998/ you can access to a page using a pythonscript (executed with a python cgi)
 - With http://localhost:9999/ you can access to a static website
 
+![check](https://github.com/anonylouis/42Project---Inception/blob/main/check.png)
+
 ## Wordpress
 
 Log to a standard account with :
@@ -54,3 +56,5 @@ After this you can write :
 - ```put filename``` : to upload the *filename*
 
 **Note :** Use *cd* and *ls* to browse directories and *exit* to quit.
+
+![ftp](https://github.com/anonylouis/42Project---Inception/blob/main/ftp.png)
